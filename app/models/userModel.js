@@ -1,7 +1,7 @@
-import Promise from 'bluebird';
-import mongoose from 'mongoose';
+var Promise = require('bluebird');
+var mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true
@@ -34,5 +34,11 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 });
+
+userSchema.statics = {
+    get: function(_login) {
+        return this.findOne({login: _login}).exec();
+    }
+};
 
 export default mongoose.model('User', userSchema);
